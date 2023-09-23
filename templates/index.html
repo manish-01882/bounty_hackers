@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GNDEC Answersheets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            text-align: center;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="file"] {
+            display: block;
+            margin: 10px auto;
+        }
+
+        input[type="submit"] {
+            display: block;
+            margin: 10px auto;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        ul.messages {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        ul.messages li {
+            color: #d9534f;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        pre {
+            background-color: #f8f8f8;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow: auto;
+            margin: 20px auto;
+            max-width: 90%;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>GNDEC Answersheets</h1>
+    
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".png, .jpg, .jpeg, .gif" required>
+        <input type="submit" value="Upload Image">
+    </form>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% if filename %}
+        <h2>Uploaded Image:</h2>
+        <img src="{{ url_for('display_image', filename=filename) }}" alt="Uploaded Image" width="400">
+
+        {% if ocr_text %}
+            <h2>OCR Text:</h2>
+            <pre>{{ ocr_text }}</pre>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
